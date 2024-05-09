@@ -1,0 +1,87 @@
+﻿@model ProjectScope.ViewModels.LoginMainViewModel
+@{
+    Layout = "_Layout";
+}
+<style>
+    .container.Login {
+        max-width: 400px; /* Adjust as needed */
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .h2.text-center {
+        color: #007bff; /* Blue color for the heading */
+    }
+
+    .form-floating {
+        margin-bottom: 20px;
+    }
+
+    .form-check-label {
+        margin-right: 10px;
+    }
+
+    .alert-light {
+        color: #007bff; /* Blue color for the link */
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Blue color for the button background */
+        border-color: #007bff; /* Blue color for the button border */
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue color on hover */
+            border-color: #0056b3; /* Darker blue color on hover */
+        }
+</style>
+<div class="container mt-3 Login">
+    <div class="h2 text-center mb-3">
+        Login
+    </div>
+    <form asp-action="StudentLogin" asp-controller="WebHome" method="post">
+        <div class="form-floating mb-3">
+            <input asp-for="Email" class="form-control" placeholder="Email" />
+            <label asp-for="Email" class="form-label"></label>
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Password" class="form-control" placeholder="Password" />
+            <label asp-for="Password" class="form-label"></label>
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="KeepLoggedIn" class="form-check-input" type="checkbox"  id="keeplogin" />
+            <label asp-for="KeepLoggedIn" class="form-check-label" > </label>
+            
+        </div>
+
+        <div class="form-floating mb-3">
+            <a href="@Url.Action("ResetByEmail")" class="alert-light">Forgot Password</a>
+
+        </div>
+        <div class="form-floating mb-3">
+            <a href="@Url.Action("FirstTimeLogin", "WebHome")" class="alert-light"> New User</a>
+        </div>
+
+        <div class="form-floating">
+            <input class="btn btn-primary" type="submit" value="Login" />
+        </div>
+    </form>
+</div>
+<script>
+    window.onload = function () {
+        Keepchecked();
+    };
+    function Keepchecked()
+    {
+    var checkbox = document.getElementById("keeplogin");
+    checkbox.checked = '@(ViewBag.check=="true" ? "checked" : "")' === "checked";
+    }
+</script>

@@ -1,0 +1,243 @@
+﻿@using ProjectScope.ViewModels
+@{
+    Layout = "_Layout";
+}
+<style>
+    .container.registration {
+        max-width: 600px; 
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .h2.text-center {
+        color: #74e66a;
+    }
+
+    .form-floating {
+        margin-bottom: 20px;
+    }
+
+    .form-check-label {
+        margin-right: 10px;
+    }
+
+    .btn-outline-primary {
+        color: black;
+        border-color: #74e66a;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #74e66a;
+            color: black;
+        }
+</style>
+@model RegistrationViewModel
+<div class="container mt-3 registration">
+    <div class="h2 text-center mb-3">
+        Register
+    </div>
+    <form asp-action="Registration" asp-controller="WebHome" method="post" enctype="multipart/form-data">
+        @* First Name *@
+        <div class="form-floating mb-4">
+            <input asp-for="FirstName" class="form-control" />
+            <label class="form-label" asp-for="FirstName"></label>
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+
+        @* Last Name *@
+        <div class="form-floating mb-4">
+            <input asp-for="LastName" class="form-control" />
+            <label class="form-label" asp-for="LastName"></label>
+            <span class="text-danger" asp-validation-for="LastName"></span>
+        </div>
+        @* Gender *@
+        <div class="form-floating mb-4">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">Gender : </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input asp-for="Gender" class="form-check-input" type="radio" id="Male" value="Male">
+                <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input asp-for="Gender" class="form-check-input" type="radio" id="Female" value="Female">
+                <label class="form-check-label">Female</label>
+            </div>
+            <span class="text-danger" asp-validation-for="Gender"></span>
+        </div>
+
+        @* Date of Birth *@
+        <div class="form-floating mb-4">
+            <input type="date" name="DateofBirth" id="DateofBirth" class="form-control" />
+            <label class="form-label" asp-for="DateofBirth"></label>
+            <span class="text-danger" asp-validation-for="DateofBirth"></span>
+        </div>
+        @* Email *@
+        <div class="form-floating mb-4">
+            <input asp-for="Email" class="form-control" />
+            <label class="form-label" asp-for="Email"></label>
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        @* Phone Number *@
+        <div class="form-floating mb-4">
+            <input asp-for="Phone" class="form-control" />
+            <label class="form-label" asp-for="Phone"></label>
+            <span class="text-danger" asp-validation-for="Phone"></span>
+        </div>
+        @* Country *@
+        <div class="form-floating mb-4">
+            <select class="form-control" id="country" onchange="updateStates()" asp-for="Country">
+                <option value="">Select Country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="Germany">Germany</option>
+                <option value="Australia">Australia</option>
+                <option value="UK">UK</option>
+            </select>
+            <label class="form-label" asp-for="Country"></label>
+            <span class="text-danger" asp-validation-for="Country"></span>
+
+        </div>
+
+        <!-- State -->
+        <div class="form-floating mb-4">
+            <select class="form-control" id="state" onchange="updateCities()" asp-for="State">
+                <option value="">Select State</option>
+            </select>
+            <label class="form-label" asp-for="State"></label>
+            <span class="text-danger" asp-validation-for="State"></span>
+
+        </div>
+
+        <!-- City -->
+        <div class="form-floating mb-4">
+            <select class="form-control" id="city" onchange="updateCity()" asp-for="City">
+                <option value="">Select City</option>
+            </select>
+            <label class="form-label" asp-for="City"></label>
+            <span class="text-danger" asp-validation-for="City"></span>
+        </div>
+
+        <div class="form-floating mb-4">
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">Hobbies : </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input asp-for="Hobbies" class="form-check-input" type="checkbox" id="Gaming" value="Gaming">
+                <label class="form-check-label">Gaming</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input asp-for="Hobbies" class="form-check-input" type="checkbox" id="Singing" value="Singing">
+                <label class="form-check-label">Singing</label>
+            </div>
+            <span class="text-danger" asp-validation-for="Hobbies"></span>
+        </div>
+
+        <div>
+
+        </div>
+        <div class="form-floating mb-4">
+            <input class="form-control" type="file" name="Image"/>
+            <label class="form-label"  for="Image" ></label>
+            <span class="text-danger" ></span>
+        </div>
+        <div class="form-floating mb-4">
+            <input type="submit"  class="btn btn-outline-primary"/>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("/Views/Shared/_ValidationScriptsPartial.cshtml")
+    <script>
+        //Overriding the default JQ validation
+        $.validator.methods.range = function (value, element, param) {
+            if ($(element).attr('id') == "DateofBirth") {
+                var min = $(element).attr('data-val-range-min');
+                var max = $(element).attr('data-val-range-max');
+                var date = new Date(value).getTime();
+                var minDate = new Date(min).getTime();
+                var maxDate = new Date(max).getTime();
+                console.log(minDate + " | " + maxDate + " | " + date);
+                return this.optional(element) || (date >= minDate && date <= maxDate);
+            }
+            // use the default method
+            return this.optional(element) || (value >= param[0] && value <= param[1]);
+        }
+
+        const stateData = {
+            India: ["Kerala", "Tamil Nadu", "Karnataka", "Gujarat", "Rajasthan"],
+            USA: ["New York", "California", "Texas", "Florida"],
+            Germany: ["Berlin", "Hamburg", "Munich", "Cologne"],
+            Australia: ["Sydney", "Melbourne", "Brisbane", "Perth"],
+            UK: ["London", "Manchester", "Birmingham", "Edinburgh"]
+        };
+
+        function updateStates() {
+            const country = document.getElementById("country").value;
+            const stateDropdown = document.getElementById("state");
+
+            // Clear previous options
+            stateDropdown.innerHTML = "<option value=''>Select State</option>";
+
+            // Add new options based on selected country
+            if (country in stateData) {
+                stateData[country].forEach(state => {
+                    const option = document.createElement("option");
+                    option.text = state;
+                    option.value = state;
+                    stateDropdown.appendChild(option);
+                });
+            }
+        }
+
+        function updateCities() {
+            const state = document.getElementById("state").value;
+            const cityDropdown = document.getElementById("city");
+
+            // Clear previous options
+            cityDropdown.innerHTML = "<option value=''>Select City</option>";
+
+            if (state === "Kerala") {
+                const cities = ["Trivandrum", "Kollam", "Alappuzha", "Kottayam", "Cochin", "Thrissur", "Palakkad", "Kozhikode", "Kannur", "Idukki", "Kasargod", "Pathanamthitta", "Wayanad", "Malappuram"];
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.text = city;
+                    option.value = city;
+                    cityDropdown.appendChild(option);
+                });
+            } else if (state === "Tamil Nadu") {
+                const cities = ["Chennai", "Coimbatore", "Madurai"];
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.text = city;
+                    option.value = city;
+                    cityDropdown.appendChild(option);
+                });
+            }
+            else if (state === "Karnataka") {
+                const cities = ["Banglore", "Uduppi", "Chitradurga"];
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.text = city;
+                    option.value = city;
+                    cityDropdown.appendChild(option);
+                });
+            }
+            else if (state === "Karnataka") {
+                const cities = ["Banglore", "Uduppi", "Chitradurga"];
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.text = city;
+                    option.value = city;
+                    cityDropdown.appendChild(option);
+                });
+            }
+        }
+
+        updateStates()
+
+    </script>
+}

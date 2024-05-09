@@ -1,0 +1,53 @@
+﻿@using ProjectScope.ViewModels
+
+@{
+    Layout = "_Layout";
+}
+@model ContactViewModel
+<style>
+
+.background{
+    padding:70px;
+    align-content:center;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.h2{
+    color:white;
+}
+</style>
+
+<div class="background" style="background-color: #053463;">
+    <div class="container mt-3 Login" >
+        <div class="h2 text-center mb-3">
+            Contact Us
+        </div>
+        <form asp-action="Contact" asp-controller="WebHome" method="post">
+
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control"  />
+                <label asp-for="Name" class="form-label" name="otp"></label>
+                <span asp-validation-for="Name" class="text-danger" name="Name"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Email" name="Email" class="form-control"  />
+                <label asp-for="Email" class="form-label" name="Email"></label>
+                <span asp-validation-for="Email" class="text-danger" name="Email"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Subject" name="Subject" class="form-control"  />
+                <label asp-for="Subject" class="form-label" name="Phone"></label>
+                <span asp-validation-for="Subject" class="text-danger" name="Subject"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Message" name="Message" class="form-control" />
+                <label asp-for="Message" class="form-label" name="Phone"></label>
+                <span asp-validation-for="Message" class="text-danger" name="Message"></span>
+            </div>
+
+            <div class="form-floating">
+                <input class="btn btn-primary" type="submit" value="Send Email" />
+            </div>
+        </form>
+    </div>
+</div>

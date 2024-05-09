@@ -1,0 +1,33 @@
+﻿@using ProjectScope.ViewModels
+
+@{
+    Layout = "_Layout";
+}
+@model LoginViewModel
+<div class="container mt-3 Login">
+    <div class="h2 text-center mb-3">
+        Create Password
+    </div>
+    <form asp-action="Login" asp-controller="WebHome" method="post">
+    
+        <div class="form-floating mb-3">
+            <input asp-for="Otp" name="Otp" class="form-control" placeholder="Enter OTP" />
+            <label asp-for="Otp" class="form-label"></label>
+            <span asp-validation-for="Otp" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Password" name="Password" class="form-control" placeholder="Enter Password" />
+            <label asp-for="Password" class="form-label"></label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Enter Password Again" />
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating">
+            <input class="btn btn-primary" type="submit" value="Login" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,23 @@
+﻿@using ProjectScope.ViewModels
+
+@{
+    Layout = "_layout";
+}
+@model ResetPasswordViewModel
+<div class="container mt-3 Login">
+    <div class="h2 text-center mb-3">
+        Reset Password
+    </div>
+    <form asp-action="ResetByEmail" asp-controller="WebHome" method="post">
+
+        <div class="form-floating mb-3">
+            <input asp-for="Email" class="form-control" />
+            <label asp-for="Email" class="form-label"></label>
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="form-floating">
+            <input class="btn btn-primary" type="submit" value="Send OTP" />
+        </div>
+    </form>
+</div>

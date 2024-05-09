@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .slide {
+        display: none;
+    }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+        }
+
+    .caption {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 5px 10px;
+    }
+
+    .buttons-container {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carousel-button {
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        /* Hover effect for buttons */
+        .carousel-button:hover {
+            background-color: #0056b3;
+            color:white;
+        }
+        a{
+            text-decoration:none;
+            color:white;
+        }
+
+</style>
+
+<div class="carousel">
+    <div class="slide">
+        <img src="~/images/Cover.png" alt="Slide 1">
+    </div>
+    <div class="slide">
+        <img src="~/images/1.png" alt="Slide 2">
+    </div>
+    <div class="slide">
+        <img src="~/images/2.png" alt="Slide 3">
+    </div>
+    <div class="slide">
+        <img src="~/images/3.png" alt="Slide 4">
+    </div>
+    <div class="slide">
+        <img src="~/images/4.png" alt="Slide 5" />
+    </div>
+</div>
+
+<div class="carousel-text container">
+    <div class="slide-text">
+        <h2>SCOPE INDIA, your career partner!</h2>
+        <p>
+            One of the best Training Destinations for Software, Networking, and Cloud Computing courses in India with 17
+            years of Industrial experience. Software, Networking, and Cloud Professional Education Centre in Kerala from Suffix E
+            Solutions with WORKING PROFESSIONALS oriented on-the-job TRAINING model. SCOPE INDIA provides courses for Software
+            Programming in Python (Data Science | Artificial Intelligence | Machine Learning | Deep Learning, Data Analytics),
+            Java, PHP, .Net, Software Testing Manual and Automation, Cloud Computing (AWS | Azure), Server Administration (MCSE | RHCE),
+            Networking (CCNA), Mobile App Development in Flutter, and Digital Marketing. Training with 100% Trusted Job Based Internship
+            Model. SCOPE INDIA has a Strong Placement Cell that provides jobs to thousands of students every year. We assure you, you won't
+            regret it after training from SCOPE INDIA!
+        </p>
+    </div>
+
+    <!-- Buttons container -->
+    <div class="buttons-container">
+        <!-- Four buttons -->
+        <button class="carousel-button">Recent Placements</button>
+        <button class="carousel-button">Courses</button>
+        <button class="carousel-button"><a asp-action="Registration" asp-area="" asp-controller="WebHome">Register Now</a></button>
+        <button class="carousel-button">Chat on WhatsApp</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        slides.forEach((slide) => {
+            slide.style.display = 'none';
+        });
+
+        slides[index].style.display = 'block';
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    showSlide(currentSlide);
+
+    setInterval(nextSlide, 5000);
+</script>
